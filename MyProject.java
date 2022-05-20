@@ -16,6 +16,10 @@ public class MyProject {
     static HashMap<String,Double> economyOfTheBowler = new HashMap<>();
 
     static List<Map.Entry<String, Double>> listValuesOfEconomicMap = new ArrayList<Map.Entry<String, Double>>();
+    static List<Map.Entry<String, Integer>> listOfValuesplayerRunsOfTheYearIn2016 = new ArrayList<Map.Entry<String, Integer>>();
+
+    static HashSet <Integer> seasonsSet= new HashSet<>();
+    static HashMap<String ,Integer> playerRunsOfTheYearIn2016 = new HashMap<>();
 
 
     public static void main(String [] args){
@@ -33,6 +37,7 @@ public class MyProject {
                 String [] data = line.split(",");
                 //System.out.println(Integer.parseInt(data[0]));
                 //System.out.println(data[10]);
+                seasonsSet.add(Integer.valueOf(data[1]));
                 if(noOfMatches.containsKey(Integer.valueOf(data[1]))){
                     noOfMatches.put(Integer.valueOf((data[1])), noOfMatches.get(Integer.valueOf((data[1])))+1);
                 }
@@ -93,6 +98,12 @@ public class MyProject {
                             bowlerWithHisOvers.put(dataOfDelivery[8], 1);
                             bowlerWithHisRuns.put(dataOfDelivery[8], Integer.valueOf(dataOfDelivery[17]));
                         }
+                        if(playerRunsOfTheYearIn2016.containsKey(dataOfDelivery[6])){
+                            playerRunsOfTheYearIn2016.put(dataOfDelivery[6],playerRunsOfTheYearIn2016.get(dataOfDelivery[6])+Integer.valueOf(dataOfDelivery[15]));
+                        }
+                        else {
+                            playerRunsOfTheYearIn2016.put(dataOfDelivery[6], Integer.valueOf(dataOfDelivery[15]));
+                        }
                     }
                 }
                 for (Integer matchId : matchesInTheYearOf2016) {
@@ -131,6 +142,16 @@ public class MyProject {
             });
             System.out.println(listValuesOfEconomicMap);
             System.out.println();
+            //System.out.println(playerRunsOfTheYearIn2016);
+            listOfValuesplayerRunsOfTheYearIn2016.addAll(playerRunsOfTheYearIn2016.entrySet());
+            Collections.sort(listOfValuesplayerRunsOfTheYearIn2016, new Comparator<Map.Entry<String, Integer>>() {
+                @Override
+                public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                    return o2.getValue().compareTo(o1.getValue());
+                }
+            });
+            System.out.println("Highest Scorer of the IPL in 2016 :");
+            System.out.println(listOfValuesplayerRunsOfTheYearIn2016.get(0));
             readObj.close();
             deliveryFileReadObj.close();
         }

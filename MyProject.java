@@ -4,9 +4,16 @@ public class MyProject {
     static HashMap<Integer , Integer> noOfMatches = new HashMap<>();
     static HashMap<Integer,String> matchIdWithBattingTeam = new HashMap<>();
     static ArrayList<Integer> matchesInTheYearOf2016 = new ArrayList<>();
+    static ArrayList<Integer> matchesInTheYearOf2015 = new ArrayList<>();
     static HashMap <String,Integer> noOfMatchesWonByAllTeamsDictionery = new HashMap<>();
 
+    static HashMap<String,Integer> bowlerWithHisOvers = new HashMap<>();
+
+    static HashMap<String,Integer> bowlerWithHisRuns = new HashMap<>();
+
     static HashMap<String,Integer> battingTeamRunGotInExtras = new HashMap<>();
+
+    static HashMap<String,Double> economyOfTheBowler = new HashMap<>();
 
 
     public static void main(String [] args){
@@ -50,11 +57,15 @@ public class MyProject {
                     if(Integer.parseInt(data[1])==2016){
                         matchesInTheYearOf2016.add(Integer.parseInt(data[0]));
                     }
+                    if(Integer.parseInt(data[1])==2015){
+                        matchesInTheYearOf2015.add(Integer.parseInt(data[0]));
+                    }
                 }
             }
             System.out.println(noOfMatches);
             System.out.println(noOfMatchesWonByAllTeamsDictionery);
             //System.out.println(matchesInTheYearOf2016);
+            //System.out.println(matchesInTheYearOf2015);
 
             File deliveryFileObj = new File("./deliveries.csv");
             Scanner deliveryFileReadObj = new Scanner(deliveryFileObj);
@@ -66,6 +77,18 @@ public class MyProject {
                     continue;
                 }
                 String [] dataOfDelivery = deliveryData.split(",");
+                for(Integer matchId : matchesInTheYearOf2015){
+                    if(Objects.equals(matchId, Integer.valueOf(dataOfDelivery[0]))){
+                        if(bowlerWithHisOvers.containsKey(dataOfDelivery[8])){
+                            bowlerWithHisOvers.put(dataOfDelivery[8],bowlerWithHisOvers.get(dataOfDelivery[8])+1);
+                            bowlerWithHisRuns.put(dataOfDelivery[8],bowlerWithHisRuns.get(dataOfDelivery[8])+Integer.valueOf(dataOfDelivery[17]));
+                        }
+                        else {
+                            bowlerWithHisOvers.put(dataOfDelivery[8], 1);
+                            bowlerWithHisRuns.put(dataOfDelivery[8], Integer.valueOf(dataOfDelivery[17]));
+                        }
+                    }
+                }
                 for (Integer matchId : matchesInTheYearOf2016) {
                     if(Objects.equals(matchId, Integer.valueOf(dataOfDelivery[0]))){
                         matchIdWithBattingTeam.put(Integer.valueOf(dataOfDelivery[0]),dataOfDelivery[2]);
@@ -80,6 +103,16 @@ public class MyProject {
             }
             //System.out.println(matchIdWithBattingTeam);
             System.out.println(battingTeamRunGotInExtras);
+            //System.out.println(bowlerWithHisOvers);
+            //System.out.println(bowlerWithHisRuns);
+            for(String key : bowlerWithHisOvers.keySet()){
+                bowlerWithHisOvers.put(key,bowlerWithHisOvers.get(key)/6);
+            }
+            for(String key : bowlerWithHisOvers.keySet()){
+                economyOfTheBowler.put(key, (double) (bowlerWithHisRuns.get(key)/bowlerWithHisOvers.get(key)));
+            }
+            //System.out.println(bowlerWithHisOvers);
+            System.out.println(economyOfTheBowler);
             readObj.close();
             deliveryFileReadObj.close();
         }

@@ -3,6 +3,8 @@ import java.util.*;
 public class MyProject {
     static HashMap<Integer , Integer> noOfMatches = new HashMap<>();
     static ArrayList <String> noOfMatchesWonByAllTeamsList = new ArrayList<>();
+    static HashMap<String,Integer> dictionaryDataOfWinnigTeams = new HashMap<>();
+    static HashMap <String,Integer> noOfMatchesWonByAllTeamsDictionery = new HashMap<>();
     public static void main(String [] args){
         try{
             File fileObj = new File("./matches.csv");
@@ -25,7 +27,22 @@ public class MyProject {
                     noOfMatches.put(Integer.valueOf(data[1]), 1);
                 }
                 if(data[10]!= "") {
-                    noOfMatchesWonByAllTeamsList.add(data[10]);
+                    if(Objects.equals(data[10], "Rising Pune Supergiant") || Objects.equals(data[10], "Rising Pune Supergiants")){
+                        if(noOfMatchesWonByAllTeamsDictionery.containsKey("Rising Pune Supergiants")){
+                            noOfMatchesWonByAllTeamsDictionery.put("Rising Pune Supergiants",noOfMatchesWonByAllTeamsDictionery.get("Rising Pune Supergiants")+1);
+                        }
+                        else {
+                            noOfMatchesWonByAllTeamsDictionery.put("Rising Pune Supergiants", 1);
+                        }
+                    }
+                    else{
+                        if(noOfMatchesWonByAllTeamsDictionery.containsKey(data[10])){
+                            noOfMatchesWonByAllTeamsDictionery.put(data[10],noOfMatchesWonByAllTeamsDictionery.get(data[10])+1);
+                        }
+                        else {
+                            noOfMatchesWonByAllTeamsDictionery.put(data[10], 1);
+                        }
+                    }
                 }
             }
             readObj.close();
@@ -34,7 +51,11 @@ public class MyProject {
             System.out.println("File Not Found");
             e.getMessage();
         }
+        catch (Exception e){
+            System.out.println("Something Wrong Please Check Your Code");
+            e.getMessage();
+        }
         System.out.println(noOfMatches);
-        System.out.println(noOfMatchesWonByAllTeamsList);
+        System.out.println(noOfMatchesWonByAllTeamsDictionery);
     }
 }

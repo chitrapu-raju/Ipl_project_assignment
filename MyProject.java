@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 public class MyProject {
     static HashMap<Integer , Integer> noOfMatches = new HashMap<>();
-    static HashMap<String,Integer> noOfMatchesWonByAllTeams = new HashMap<>();
+    static ArrayList <String> noOfMatchesWonByAllTeamsList = new ArrayList<>();
     public static void main(String [] args){
         try{
             File fileObj = new File("./matches.csv");
@@ -25,11 +25,7 @@ public class MyProject {
                     noOfMatches.put(Integer.valueOf(data[1]), 1);
                 }
                 if(data[10]!= "") {
-                    if (noOfMatchesWonByAllTeams.containsKey(data[10])) {
-                        noOfMatchesWonByAllTeams.put(data[10], noOfMatchesWonByAllTeams.get(data[10]) + 1);
-                    } else {
-                        noOfMatchesWonByAllTeams.put(data[10], 1);
-                    }
+                    noOfMatchesWonByAllTeamsList.add(data[10]);
                 }
             }
             readObj.close();
@@ -39,6 +35,6 @@ public class MyProject {
             e.getMessage();
         }
         System.out.println(noOfMatches);
-        System.out.println(noOfMatchesWonByAllTeams);
+        System.out.println(noOfMatchesWonByAllTeamsList);
     }
 }

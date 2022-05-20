@@ -15,6 +15,8 @@ public class MyProject {
 
     static HashMap<String,Double> economyOfTheBowler = new HashMap<>();
 
+    static List<Map.Entry<String, Double>> listValuesOfEconomicMap = new ArrayList<Map.Entry<String, Double>>();
+
 
     public static void main(String [] args){
         try{
@@ -119,7 +121,15 @@ public class MyProject {
             }
             //System.out.println(bowlerWithHisOvers);
             System.out.println("For the year 2015 get the top economical bowlers :");
-            System.out.println(economyOfTheBowler);
+            listValuesOfEconomicMap.addAll(economyOfTheBowler.entrySet());
+            //System.out.println(economyOfTheBowler);
+            Collections.sort(listValuesOfEconomicMap, new Comparator<Map.Entry<String, Double>>() {
+                @Override
+                public int compare(Map.Entry<String, Double> o1, Map.Entry<String, Double> o2) {
+                    return o2.getValue().compareTo(o1.getValue());
+                }
+            });
+            System.out.println(listValuesOfEconomicMap);
             System.out.println();
             readObj.close();
             deliveryFileReadObj.close();

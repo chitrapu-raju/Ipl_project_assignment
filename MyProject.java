@@ -2,9 +2,13 @@ import java.io.*;
 import java.util.*;
 public class MyProject {
     static HashMap<Integer , Integer> noOfMatches = new HashMap<>();
-    static ArrayList <String> noOfMatchesWonByAllTeamsList = new ArrayList<>();
-    static HashMap<String,Integer> dictionaryDataOfWinnigTeams = new HashMap<>();
+    static HashMap<Integer,String> matchIdWithBattingTeam = new HashMap<>();
+    static ArrayList<Integer> matchesInTheYearOf2016 = new ArrayList<>();
     static HashMap <String,Integer> noOfMatchesWonByAllTeamsDictionery = new HashMap<>();
+
+    static HashMap<String,Integer> battingTeamRunGotInExtras = new HashMap<>();
+
+
     public static void main(String [] args){
         try{
             File fileObj = new File("./matches.csv");
@@ -43,19 +47,45 @@ public class MyProject {
                             noOfMatchesWonByAllTeamsDictionery.put(data[10], 1);
                         }
                     }
+                    if(Integer.parseInt(data[1])==2016){
+                        matchesInTheYearOf2016.add(Integer.parseInt(data[0]));
+                    }
                 }
             }
+            System.out.println(noOfMatches);
+            System.out.println(noOfMatchesWonByAllTeamsDictionery);
+            //System.out.println(matchesInTheYearOf2016);
+
+            File deliveryFileObj = new File("./deliveries.csv");
+            Scanner deliveryFileReadObj = new Scanner(deliveryFileObj);
+            boolean removeFirstLine = true;
+            while(deliveryFileReadObj.hasNextLine()){
+                String deliveryData = deliveryFileReadObj.nextLine();
+                if(removeFirstLine){
+                    removeFirstLine =false;
+                    continue;
+                }
+                String [] dataOfDelivery = deliveryData.split(",");
+                for (Integer matchId : matchesInTheYearOf2016) {
+                    if(Objects.equals(matchId, Integer.valueOf(dataOfDelivery[0]))){
+                        matchIdWithBattingTeam.put(Integer.valueOf(dataOfDelivery[0]),dataOfDelivery[2]);
+                        if(battingTeamRunGotInExtras.containsKey(dataOfDelivery[2])){
+                            battingTeamRunGotInExtras.put(dataOfDelivery[2],battingTeamRunGotInExtras.get(dataOfDelivery[2])+Integer.valueOf(dataOfDelivery[16]));
+                        }
+                        else {
+                            battingTeamRunGotInExtras.put(dataOfDelivery[2], Integer.valueOf(dataOfDelivery[16]));
+                        }
+                    }
+                }
+            }
+            //System.out.println(matchIdWithBattingTeam);
+            System.out.println(battingTeamRunGotInExtras);
             readObj.close();
+            deliveryFileReadObj.close();
         }
         catch(FileNotFoundException e){
             System.out.println("File Not Found");
             e.getMessage();
         }
-        catch (Exception e){
-            System.out.println("Something Wrong Please Check Your Code");
-            e.getMessage();
-        }
-        System.out.println(noOfMatches);
-        System.out.println(noOfMatchesWonByAllTeamsDictionery);
     }
 }

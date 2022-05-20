@@ -62,8 +62,12 @@ public class MyProject {
                     }
                 }
             }
+            System.out.println("Number of matches played per year of all the years in IPL :");
             System.out.println(noOfMatches);
+            System.out.println();
+            System.out.println("Number of matches won of all teams over all the years of IPL :");
             System.out.println(noOfMatchesWonByAllTeamsDictionery);
+            System.out.println();
             //System.out.println(matchesInTheYearOf2016);
             //System.out.println(matchesInTheYearOf2015);
 
@@ -102,17 +106,21 @@ public class MyProject {
                 }
             }
             //System.out.println(matchIdWithBattingTeam);
+            System.out.println("For the year 2016 , the extra runs conceded per team :");
             System.out.println(battingTeamRunGotInExtras);
+            System.out.println();
             //System.out.println(bowlerWithHisOvers);
             //System.out.println(bowlerWithHisRuns);
             for(String key : bowlerWithHisOvers.keySet()){
                 bowlerWithHisOvers.put(key,bowlerWithHisOvers.get(key)/6);
             }
             for(String key : bowlerWithHisOvers.keySet()){
-                economyOfTheBowler.put(key, (double) (bowlerWithHisRuns.get(key)/bowlerWithHisOvers.get(key)));
+                economyOfTheBowler.put(key, bowlerWithHisRuns.get(key)/(double)bowlerWithHisOvers.get(key));
             }
             //System.out.println(bowlerWithHisOvers);
+            System.out.println("For the year 2015 get the top economical bowlers :");
             System.out.println(economyOfTheBowler);
+            System.out.println();
             readObj.close();
             deliveryFileReadObj.close();
         }

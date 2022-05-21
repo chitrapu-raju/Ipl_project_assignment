@@ -19,7 +19,7 @@ public class MyProject {
     static List<Map.Entry<String, Integer>> listOfValuesplayerRunsOfTheYearIn2016 = new ArrayList<Map.Entry<String, Integer>>();
 
     static HashSet <Integer> seasonsSet= new HashSet<>();
-    static HashMap<String ,Integer> playerRunsOfTheYearIn2016 = new HashMap<>();
+    static HashMap<String ,Integer> playerRunsOfTheYearIn2015 = new HashMap<>();
 
 
     public static void main(String [] args){
@@ -98,11 +98,11 @@ public class MyProject {
                             bowlerWithHisOvers.put(dataOfDelivery[8], 1);
                             bowlerWithHisRuns.put(dataOfDelivery[8], Integer.valueOf(dataOfDelivery[17]));
                         }
-                        if(playerRunsOfTheYearIn2016.containsKey(dataOfDelivery[6])){
-                            playerRunsOfTheYearIn2016.put(dataOfDelivery[6],playerRunsOfTheYearIn2016.get(dataOfDelivery[6])+Integer.valueOf(dataOfDelivery[15]));
+                        if(playerRunsOfTheYearIn2015.containsKey(dataOfDelivery[6])){
+                            playerRunsOfTheYearIn2015.put(dataOfDelivery[6],playerRunsOfTheYearIn2015.get(dataOfDelivery[6])+Integer.valueOf(dataOfDelivery[15]));
                         }
                         else {
-                            playerRunsOfTheYearIn2016.put(dataOfDelivery[6], Integer.valueOf(dataOfDelivery[15]));
+                            playerRunsOfTheYearIn2015.put(dataOfDelivery[6], Integer.valueOf(dataOfDelivery[15]));
                         }
                     }
                 }
@@ -143,14 +143,14 @@ public class MyProject {
             System.out.println(listValuesOfEconomicMap);
             System.out.println();
             //System.out.println(playerRunsOfTheYearIn2016);
-            listOfValuesplayerRunsOfTheYearIn2016.addAll(playerRunsOfTheYearIn2016.entrySet());
+            listOfValuesplayerRunsOfTheYearIn2016.addAll(playerRunsOfTheYearIn2015.entrySet());
             Collections.sort(listOfValuesplayerRunsOfTheYearIn2016, new Comparator<Map.Entry<String, Integer>>() {
                 @Override
                 public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
                     return o2.getValue().compareTo(o1.getValue());
                 }
             });
-            System.out.println("Highest Scorer of the IPL in 2016 :");
+            System.out.println("Highest Scorer of the IPL in 2015 :");
             System.out.println(listOfValuesplayerRunsOfTheYearIn2016.get(0));
             readObj.close();
             deliveryFileReadObj.close();
